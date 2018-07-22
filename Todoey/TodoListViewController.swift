@@ -12,8 +12,15 @@ class TodoListViewController: UITableViewController {
     
     var itemArray = ["Find Mike", "Buy Eggos", "Destory Demogorgon"]
     
+    let defaults = UserDefaults.standard
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // update the itemArray with the array stored in the user default
+        if let items = defaults.array(forKey: "TodoListArray") as? [String]{
+            itemArray = items
+        }
      
     }
     
@@ -59,11 +66,15 @@ class TodoListViewController: UITableViewController {
             // What will happen once the user clicks Item button on our UIAlert
             self.itemArray.append(textField.text!)
             
+            // save and update the array in user default (storing data)
+            self.defaults.set(self.itemArray, forKey: "TodoListArray")
+            
             // reload the table (call tableView's datasource and delegate methods again)
             self.tableView.reloadData()
             
         }
-        
+        // add a TextField on the alert window. The textField is stored in a local variable and is used in the UIAlertAction.
+        // UIAlertAction only gets called when the button which is asocciated with the action is pressed.
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder = "Create new item"
             textField = alertTextField
