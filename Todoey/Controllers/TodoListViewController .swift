@@ -91,6 +91,7 @@ class TodoListViewController: UITableViewController {
                         newItem.title = textField.text!
                     
                         currentCategory.items.append(newItem)
+                        print(self.todoItems!)
                     }
                 } catch {
                     print("Error saving new items, \(error)")
